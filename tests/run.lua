@@ -19,6 +19,7 @@ end
 
 local Timer = require("ulib.timer")
 local Recommendations = require("ulib.recommendations")
+local Threats = require("ulib.threats")
 
 test("Timer.Every respects its interval and fires immediately", function()
     local now = 10
@@ -88,6 +89,31 @@ test("recommendations sort by score and then id", function()
     assert(recommendations[1].id == "a")
     assert(recommendations[2].id == "b")
     assert(recommendations[3].id == "z")
+end)
+
+test("hard-control classification distinguishes stuns and hexes from roots and dispels", function()
+    local stun = Threats.ClassifyAbility("sven_storm_bolt", 0, 0, 2, 3)
+    local hex = Threats.ClassifyAbility("lion_voodoo", 0, 0, 2, 3)
+    local root = Threats.ClassifyAbility("crystal_maiden_frostbite", 0, 1, 2, 3)
+    local dispellable_silence = Threats.ClassifyAbility("drow_ranger_wave_of_silence", 0, 1, 2, 3)
+    -- Planar Pocket has strong-dispel metadata but grants magic resistance, not hard control.
+    local strong_dispellable_non_control = Threats.ClassifyAbility("spirit_breaker_planar_pocket", 0, 0, 2, 3)
+    local bkb_piercing_stun = Threats.ClassifyAbility("axe_berserkers_call", 0, 3, 2, 3)
+    assert(stun.disable, "stuns should be classified from the explicit ability list")
+    assert(hex.disable, "hexes should be classified from the explicit ability list")
+    assert(not root.disable, "a root is not automatically a hard disable")
+    assert(not dispellable_silence.disable, "dispel type alone must not imply hard control")
+    assert(not strong_dispellable_non_control.disable,
+        "strong-dispel metadata must not turn a non-control ability into hard control")
+    assert(not bkb_piercing_stun.disable, "BKB-piercing control belongs to the separate pierce threat")
+end)
+
+test("physical DPS averages minimum and maximum attack damage", function()
+    approx(Threats.EstimatePhysicalDps(100, 200, 1.5, 5000), 225)
+    approx(Threats.EstimatePhysicalDps(200, 100, 1.5, 5000), 225)
+    approx(Threats.EstimatePhysicalDps(100, nil, 2, 5000), 200)
+    approx(Threats.EstimatePhysicalDps(-10, 50, 2, 5000), 50)
+    approx(Threats.EstimatePhysicalDps(100, 200, 100, 5000), 5000)
 end)
 
 -- Fake JSON and filesystem keep persistence tests hermetic and exercise Windows-style rename semantics.
@@ -651,8 +677,9 @@ test("counter-item script loads with the host API and exports callbacks", functi
         GetItemByIndex = function(hero, slot) return hero.items[slot] end,
         GetAbilityByIndex = function(hero, slot) return hero.abilities and hero.abilities[slot] end,
         IsRanged = function() return true end,
-        GetTrueDamage = function() return 0 end,
-        GetAttacksPerSecond = function() return 0 end,
+        GetTrueDamage = function(hero) return hero.min_damage or 0 end,
+        GetTrueMaximumDamage = function(hero) return hero.max_damage or hero.min_damage or 0 end,
+        GetAttacksPerSecond = function(hero) return hero.attacks_per_second or 0 end,
     }
     _G.Entity = { IsSameTeam = function(a, b) return a.team == b.team end }
     _G.Ability = {
@@ -746,7 +773,55 @@ test("counter-item script loads with the host API and exports callbacks", functi
     counter.OnDraw()
     assert(rendered_has("Linken's Sphere"),
         "the enemy Linken's item should be named in the recommendation source")
+
     counter.OnGameEnd()
+    enemy.items, enemy.abilities = {}, {}
+    enemy.min_damage, enemy.max_damage, enemy.attacks_per_second = 100, 200, 2
+    local dps_messages = {}
+    _G.print = function(...)
+        local values = { ... }
+        for i, value in ipairs(values) do
+            values[i] = tostring(value)
+        end
+        dps_messages[#dps_messages + 1] = table.concat(values, " ")
+    end
+    fake_clock = fake_clock + 1
+    counter.OnUpdate()
+    _G.print = original_print
+    assert(table.concat(dps_messages, "\n"):find("dps 300", 1, true),
+        "the game scan should use the average of minimum and maximum damage")
+    counter.OnGameEnd()
+end)
+
+test("Icons.Image retries a failed load after a delay", function()
+    local loaded_icons = package.loaded["ulib.icons"]
+    local original_load_image = Render.LoadImage
+    local load_calls = 0
+    Render.LoadImage = function()
+        load_calls = load_calls + 1
+        if load_calls == 1 then
+            error("injected temporary image load failure")
+        end
+        return 123
+    end
+    package.loaded["ulib.icons"] = nil
+    local Icons = require("ulib.icons")
+    local start = fake_clock
+
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == nil)
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == nil and load_calls == 1,
+        "a failed path should not be loaded again on every frame")
+    fake_clock = start + 4
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == nil and load_calls == 1)
+    fake_clock = start + 5
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == 123 and load_calls == 2,
+        "the loader should retry after the backoff interval")
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == 123 and load_calls == 2,
+        "a successful handle should be cached")
+
+    fake_clock = start
+    Render.LoadImage = original_load_image
+    package.loaded["ulib.icons"] = loaded_icons
 end)
 
 print(("%d tests passed"):format(passed))
