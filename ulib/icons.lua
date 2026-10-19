@@ -13,16 +13,27 @@
 local Icons = {}
 
 -- модуль общий для всех скриптов, поэтому кэш тоже общий
-local cache = {} -- путь -> handle | false
+local cache = {}     -- путь -> handle | false
+local retry_at = {}  -- путь -> время следующей попытки после ошибки
+local RETRY_AFTER <const> = 5 -- не вызываем загрузчик каждый кадр при временной ошибке
 
 function Icons.Image(path)
     local handle = cache[path]
-    if handle == nil then
-        local ok, result = pcall(Render.LoadImage, path)
-        handle = (ok and result and result ~= 0) and result or false
-        cache[path] = handle
+    if handle and handle ~= false then
+        return handle
     end
-    return handle or nil
+    if handle == false and os.clock() < (retry_at[path] or 0) then
+        return nil
+    end
+
+    local ok, result = pcall(Render.LoadImage, path)
+    if ok and result and result ~= 0 then
+        cache[path], retry_at[path] = result, nil
+        return result
+    end
+
+    cache[path], retry_at[path] = false, os.clock() + RETRY_AFTER
+    return nil
 end
 
 function Icons.Item(name)

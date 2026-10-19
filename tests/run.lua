@@ -19,6 +19,7 @@ end
 
 local Timer = require("ulib.timer")
 local Recommendations = require("ulib.recommendations")
+local Threats = require("ulib.threats")
 
 test("Timer.Every respects its interval and fires immediately", function()
     local now = 10
@@ -88,6 +89,31 @@ test("recommendations sort by score and then id", function()
     assert(recommendations[1].id == "a")
     assert(recommendations[2].id == "b")
     assert(recommendations[3].id == "z")
+end)
+
+test("hard-control classification distinguishes stuns and hexes from roots and dispels", function()
+    local stun = Threats.ClassifyAbility("sven_storm_bolt", 0, 0, 2, 3)
+    local hex = Threats.ClassifyAbility("lion_voodoo", 0, 0, 2, 3)
+    local root = Threats.ClassifyAbility("crystal_maiden_frostbite", 0, 1, 2, 3)
+    local dispellable_silence = Threats.ClassifyAbility("drow_ranger_wave_of_silence", 0, 1, 2, 3)
+    -- Planar Pocket has strong-dispel metadata but grants magic resistance, not hard control.
+    local strong_dispellable_non_control = Threats.ClassifyAbility("spirit_breaker_planar_pocket", 0, 0, 2, 3)
+    local bkb_piercing_stun = Threats.ClassifyAbility("axe_berserkers_call", 0, 3, 2, 3)
+    assert(stun.disable, "stuns should be classified from the explicit ability list")
+    assert(hex.disable, "hexes should be classified from the explicit ability list")
+    assert(not root.disable, "a root is not automatically a hard disable")
+    assert(not dispellable_silence.disable, "dispel type alone must not imply hard control")
+    assert(not strong_dispellable_non_control.disable,
+        "strong-dispel metadata must not turn a non-control ability into hard control")
+    assert(not bkb_piercing_stun.disable, "BKB-piercing control belongs to the separate pierce threat")
+end)
+
+test("physical DPS averages minimum and maximum attack damage", function()
+    approx(Threats.EstimatePhysicalDps(100, 200, 1.5, 5000), 225)
+    approx(Threats.EstimatePhysicalDps(200, 100, 1.5, 5000), 225)
+    approx(Threats.EstimatePhysicalDps(100, nil, 2, 5000), 200)
+    approx(Threats.EstimatePhysicalDps(-10, 50, 2, 5000), 50)
+    approx(Threats.EstimatePhysicalDps(100, 200, 100, 5000), 5000)
 end)
 
 -- Fake JSON and filesystem keep persistence tests hermetic and exercise Windows-style rename semantics.
@@ -290,6 +316,30 @@ test("Http.GetJSON coalesces simultaneous requests", function()
     assert(second and second.data == payload and second.err == nil and second.cached == false)
 end)
 
+test("Http.GetJSON keeps requests with different accept validators separate", function()
+    local before = #http_requests
+    local url = "https://example.test/different-accept"
+    local unvalidated, validated
+    Http.GetJSON(url, { ttl = 0 }, function(data, err)
+        unvalidated = { data = data, err = err }
+    end)
+    Http.GetJSON(url, { ttl = 0, accept = function(data)
+        return type(data) == "table" and data.accepted == true
+    end }, function(data, err)
+        validated = { data = data, err = err }
+    end)
+    assert(#http_requests == before + 2,
+        "requests with different response validators must not share a pending request")
+
+    local raw_data = { accepted = false }
+    http_requests[before + 1].callback({ code = 200, response = JSON:encode(raw_data) })
+    assert(unvalidated.data == raw_data and unvalidated.err == nil)
+
+    local accepted_data = { accepted = true }
+    http_requests[before + 2].callback({ code = 200, response = JSON:encode(accepted_data) })
+    assert(validated.data == accepted_data and validated.err == nil)
+end)
+
 test("Http.GetJSON clears failed requests and ignores duplicate responses", function()
     local before = #http_requests
     local url = "https://example.test/send-failure"
@@ -314,6 +364,52 @@ test("Http.GetJSON clears failed requests and ignores duplicate responses", func
     http_requests[#http_requests].callback(response)
     http_requests[#http_requests].callback(response)
     assert(success_calls == 1 and success_data == payload)
+end)
+
+test("Http.GetJSON revalidates in-memory cache entries with accept", function()
+    local before = #http_requests
+    local url = "https://example.test/cache-accept-memory"
+    local invalid = { err = "stale cached error" }
+    Http.GetJSON(url, { ttl = 100 }, function(data, err)
+        assert(data == invalid and err == nil)
+    end)
+    http_requests[#http_requests].callback({ code = 200, response = JSON:encode(invalid) })
+
+    local accepted_result
+    Http.GetJSON(url, { ttl = 100, accept = function(data)
+        return type(data) == "table" and type(data.rows) == "table"
+    end }, function(data, err, cached)
+        accepted_result = { data = data, err = err, cached = cached }
+    end)
+    assert(#http_requests == before + 2, "invalid memory cache should trigger a fresh request")
+    local valid = { rows = {} }
+    http_requests[#http_requests].callback({ code = 200, response = JSON:encode(valid) })
+    assert(accepted_result.data == valid and accepted_result.err == nil and accepted_result.cached == false)
+end)
+
+test("Http.GetJSON revalidates disk cache entries with accept", function()
+    local before = #http_requests
+    local url = "https://example.test/cache-accept-disk"
+    local invalid = { err = "stale disk error" }
+    Http.GetJSON(url, { ttl = 100 }, function(data, err)
+        assert(data == invalid and err == nil)
+    end)
+    http_requests[#http_requests].callback({ code = 200, response = JSON:encode(invalid) })
+
+    local loaded_http = package.loaded["ulib.http"]
+    package.loaded["ulib.http"] = nil
+    local cold_http = require("ulib.http")
+    local accepted_result
+    cold_http.GetJSON(url, { ttl = 100, accept = function(data)
+        return type(data) == "table" and type(data.rows) == "table"
+    end }, function(data, err, cached)
+        accepted_result = { data = data, err = err, cached = cached }
+    end)
+    assert(#http_requests == before + 2, "invalid disk cache should trigger a fresh request")
+    local valid = { rows = {} }
+    http_requests[#http_requests].callback({ code = 200, response = JSON:encode(valid) })
+    assert(accepted_result.data == valid and accepted_result.err == nil and accepted_result.cached == false)
+    package.loaded["ulib.http"] = loaded_http
 end)
 
 test("Http.GetJSON reports request exceptions and allows retry", function()
@@ -579,13 +675,25 @@ test("counter-item script loads with the host API and exports callbacks", functi
         GetUnitName = function(hero) return hero.unit end,
         GetCurrentLevel = function() return 10 end,
         GetItemByIndex = function(hero, slot) return hero.items[slot] end,
-        GetAbilityByIndex = function() return nil end,
+        GetAbilityByIndex = function(hero, slot) return hero.abilities and hero.abilities[slot] end,
         IsRanged = function() return true end,
-        GetTrueDamage = function() return 0 end,
-        GetAttacksPerSecond = function() return 0 end,
+        GetTrueDamage = function(hero) return hero.min_damage or 0 end,
+        GetTrueMaximumDamage = function(hero) return hero.max_damage or hero.min_damage or 0 end,
+        GetAttacksPerSecond = function(hero) return hero.attacks_per_second or 0 end,
     }
     _G.Entity = { IsSameTeam = function(a, b) return a.team == b.team end }
-    _G.Ability = { GetName = function(item) return item.name end }
+    _G.Ability = {
+        GetName = function(item) return item.name end,
+        IsAttributes = function(item) return item.attributes or false end,
+        IsPassive = function(item) return item.passive or false end,
+        IsHidden = function(item) return item.hidden or false end,
+        GetDamageType = function(item) return item.damage_type or 0 end,
+        GetDispellableType = function(item) return item.dispellable or 0 end,
+        GetImmunityType = function(item) return item.immunity or 0 end,
+        GetBehavior = function(item) return item.behavior or 0 end,
+        GetTargetTeam = function(item) return item.target_team or 0 end,
+        GetLevel = function(item) return item.level or 0 end,
+    }
     _G.Players = { GetLocal = function() return 1 end }
     local lane_selection_flags = 1
     _G.Player = { GetTeamData = function() return { lane_selection_flags = lane_selection_flags } end }
@@ -653,7 +761,67 @@ test("counter-item script loads with the host API and exports callbacks", functi
     rendered_texts = {}
     counter.OnDraw()
     assert(not rendered_has("Gem"), "an active team Gem should suppress a duplicate recommendation")
+
+    team_ally.items = {}
+    local_hero.abilities = {
+        [0] = { name = "test_targeted_spell", behavior = 8, target_team = 2, level = 1 },
+    }
+    enemy.items = { [0] = { name = "item_sphere" } }
+    fake_clock = fake_clock + 1
+    counter.OnUpdate()
+    rendered_texts = {}
+    counter.OnDraw()
+    assert(rendered_has("Linken's Sphere"),
+        "the enemy Linken's item should be named in the recommendation source")
+
     counter.OnGameEnd()
+    enemy.items, enemy.abilities = {}, {}
+    enemy.min_damage, enemy.max_damage, enemy.attacks_per_second = 100, 200, 2
+    local dps_messages = {}
+    _G.print = function(...)
+        local values = { ... }
+        for i, value in ipairs(values) do
+            values[i] = tostring(value)
+        end
+        dps_messages[#dps_messages + 1] = table.concat(values, " ")
+    end
+    fake_clock = fake_clock + 1
+    counter.OnUpdate()
+    _G.print = original_print
+    assert(table.concat(dps_messages, "\n"):find("dps 300", 1, true),
+        "the game scan should use the average of minimum and maximum damage")
+    counter.OnGameEnd()
+end)
+
+test("Icons.Image retries a failed load after a delay", function()
+    local loaded_icons = package.loaded["ulib.icons"]
+    local original_load_image = Render.LoadImage
+    local load_calls = 0
+    Render.LoadImage = function()
+        load_calls = load_calls + 1
+        if load_calls == 1 then
+            error("injected temporary image load failure")
+        end
+        return 123
+    end
+    package.loaded["ulib.icons"] = nil
+    local Icons = require("ulib.icons")
+    local start = fake_clock
+
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == nil)
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == nil and load_calls == 1,
+        "a failed path should not be loaded again on every frame")
+    fake_clock = start + 4
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == nil and load_calls == 1)
+    fake_clock = start + 5
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == 123 and load_calls == 2,
+        "the loader should retry after the backoff interval")
+    assert(Icons.Image("panorama/images/test/retry.vtex_c") == 123 and load_calls == 2,
+        "a successful handle should be cached")
+
+    fake_clock = start
+    Render.LoadImage = original_load_image
+    package.loaded["ulib.icons"] = loaded_icons
 end)
 
 print(("%d tests passed"):format(passed))

@@ -24,7 +24,8 @@ local HEADERS <const> = { ["User-Agent"] = "Umbrella/ulib", ["Accept"] = "applic
 
 -- модуль общий для всех скриптов, поэтому кэш и ожидающие запросы тоже общие
 local memory = {}  -- полный url -> { url, time, data }
-local pending = {} -- полный url -> { at, limit, callbacks, done }
+local pending = {} -- полный url -> accept-функция/сентинел -> { at, limit, callbacks, done }
+local NO_ACCEPT = {}
 local LOST_AFTER <const> = 15 -- сверх timeout запроса
 
 -- FNV-1a, 32 бита: короткое имя файла кэша по url
@@ -71,25 +72,38 @@ function Http.GetJSON(url, opts, callback)
     local ttl = opts.ttl or 0
     local cache_id = hash(url) -- только имя файла/идентификатор запроса; в памяти используется полный URL
     local entry = cached_entry(url, cache_id, ttl > 0)
+    if entry and opts.accept then
+        local ok, accepted = pcall(opts.accept, entry.data)
+        if not (ok and accepted) then
+            entry = nil
+            memory[url] = nil
+        end
+    end
     if entry and ttl > 0 and os.time() - entry.time < ttl then
         notify({ callback }, entry.data, nil, true)
         return
     end
 
     local timeout = opts.timeout or 15
-    local previous = pending[url]
+    local accept_key = opts.accept or NO_ACCEPT
+    local url_pending = pending[url]
+    local previous = url_pending and url_pending[accept_key]
     if previous and os.clock() - previous.at < previous.limit then
         previous.callbacks[#previous.callbacks + 1] = callback
         return
     end
 
     -- Сначала публикуем новый запрос, затем уведомляем старых ожидающих: callback может
-    -- повторно вызвать GetJSON для этого URL и должен присоединиться к новому запросу.
+    -- повторно вызвать GetJSON с тем же accept и должен присоединиться к новому запросу.
     if previous then
         previous.done = true
     end
     local waiting = { at = os.clock(), limit = timeout + LOST_AFTER, callbacks = { callback } }
-    pending[url] = waiting
+    if not url_pending then
+        url_pending = {}
+        pending[url] = url_pending
+    end
+    url_pending[accept_key] = waiting
     if previous then
         notify(previous.callbacks, entry and entry.data, "no response", entry ~= nil)
     end
@@ -99,10 +113,14 @@ function Http.GetJSON(url, opts, callback)
             return -- HTTP-библиотека не должна завершать один запрос дважды
         end
         waiting.responded = true
-        if pending[url] ~= waiting then
+        local requests = pending[url]
+        if not requests or requests[accept_key] ~= waiting then
             return -- запрос уже заменён повтором; его поздний ответ не должен затереть свежий кэш
         end
-        pending[url] = nil
+        requests[accept_key] = nil
+        if next(requests) == nil then
+            pending[url] = nil
+        end
 
         res = type(res) == "table" and res or {}
         local data, err
@@ -145,8 +163,12 @@ function Http.GetJSON(url, opts, callback)
     local request_ok, sent = pcall(HTTP.Request, "GET", url, { headers = HEADERS, timeout = timeout }, on_response, cache_id)
     if (not request_ok or not sent) and not waiting.responded then
         waiting.responded = true
-        if pending[url] == waiting then
-            pending[url] = nil
+        local requests = pending[url]
+        if requests and requests[accept_key] == waiting then
+            requests[accept_key] = nil
+            if next(requests) == nil then
+                pending[url] = nil
+            end
         end
         local err = request_ok and "request was not sent" or ("request failed: " .. tostring(sent))
         notify(waiting.callbacks, entry and entry.data, err, entry ~= nil)

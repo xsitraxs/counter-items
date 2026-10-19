@@ -4,8 +4,8 @@
 -- основного атрибута, ближнего боя и того, что уже куплено тобой или командой.
 --
 -- Откуда угрозы:
---   магия и контроль - из данных способностей игры: тип урона, пробивает ли BKB, снимается ли только
---     сильным развеиванием (Ability.GetDamageType / GetImmunityType / GetDispellableType);
+--   магия - из типа урона способности; жёсткий контроль - явный список способностей в ulib/threats.lua,
+--     стан/хекс и т. п. не определяются по типу развеивания; иммунитет к BKB проверяется отдельно;
 --   инвиз, уклонение, лечение, иллюзии, пассивки под Break, сайленсы, точечный контроль, бурст с руки
 --     (Focus Fire, Omnislash, Duel - в обычном DPS их не видно), контроль сквозь BKB (Berserker's Call,
 --     Reverse Polarity, Doom - BKB от них не спасает) - таблицы ниже
@@ -23,6 +23,7 @@ local Icons = require("ulib.icons")
 local Http = require("ulib.http")
 local Timer = require("ulib.timer")
 local Recommendations = require("ulib.recommendations")
+local Threats = require("ulib.threats")
 
 local counter = {}
 
@@ -66,7 +67,6 @@ local FIT_SOME <const> = 0.02    -- 2-5% - подходит иногда, оце
 -- значения из документации - запасные: таблица Enum.ButtonCode в доке, например, сдвинута
 local MAGICAL <const> = Enum.DamageTypes.DAMAGE_TYPE_MAGICAL or 2
 local PIERCES_BKB <const> = Enum.ImmunityTypes.SPELL_IMMUNITY_ENEMIES_YES or 3
-local STRONG_DISPEL <const> = Enum.DispellableTypes.SPELL_DISPELLABLE_YES_STRONG or 1
 local UNIT_TARGET <const> = Enum.AbilityBehavior.DOTA_ABILITY_BEHAVIOR_UNIT_TARGET or 8
 local TARGET_ENEMY <const> = Enum.TargetTeam.DOTA_UNIT_TARGET_TEAM_ENEMY or 2
 local POST_GAME <const> = Enum.GameState.DOTA_GAMERULES_STATE_POST_GAME or 6
@@ -306,7 +306,8 @@ local ENEMY_ITEM_LABELS <const> = {
     heavens_halberd = "Halberd", radiance = "Radiance", satanic = "Satanic", heart = "Heart",
     holy_locket = "Holy Locket", guardian_greaves = "Greaves", bloodstone = "Bloodstone", mekansm = "Mekansm",
     vladmir = "Vladmir", manta = "Manta", helm_of_the_overlord = "Overlord", orchid = "Orchid",
-    bloodthorn = "Bloodthorn", sheepstick = "Scythe of Vyse", rod_of_atos = "Atos", gungir = "Gleipnir",
+    bloodthorn = "Bloodthorn", sheepstick = "Scythe of Vyse", sphere = "Linken's Sphere",
+    rod_of_atos = "Atos", gungir = "Gleipnir",
     nullifier = "Nullifier", dagon = "Dagon", dagon_2 = "Dagon", dagon_3 = "Dagon", dagon_4 = "Dagon",
     dagon_5 = "Dagon", ethereal_blade = "Ethereal Blade", veil_of_discord = "Veil", blink = "Blink",
     swift_blink = "Swift Blink", arcane_blink = "Arcane Blink", overwhelming_blink = "Overwhelming Blink",
@@ -696,7 +697,7 @@ log("v%s loaded, language: %s", VERSION, lang)
 
 --#region Analysis
 
-local kinds = {}       -- имя способности -> { magic, disable } из данных игры (не меняются за матч)
+local kinds = {}       -- имя -> { magic из API, disable из allowlist }; классификация не меняется за матч
 local peaks = {}       -- unit name врага -> { magic, disables } - максимум за матч
 local hero_names = {}  -- unit name -> имя для панели
 local lines = {}       -- готовые строки панели
@@ -746,13 +747,10 @@ local function ability_kind(ab, name)
     if kind then
         return kind
     end
-    kind = {}
-    if not Ability.IsPassive(ab, true) then
-        kind.magic = Ability.GetDamageType(ab) == MAGICAL
-        -- жёсткий контроль (стан, хекс...) снимается только сильным развеиванием; пробивающий BKB - не наш случай
-        kind.disable = Ability.GetDispellableType(ab, true) == STRONG_DISPEL
-            and Ability.GetImmunityType(ab, true) ~= PIERCES_BKB
-    end
+    local damage_type = not Ability.IsPassive(ab, true) and Ability.GetDamageType(ab) or nil
+    local immunity_type = Threats.IsHardDisable(name) and safe(Ability.GetImmunityType, ab, true) or nil
+    -- Dispellability does not identify control: use the explicit hard-control allowlist instead.
+    kind = Threats.ClassifyAbility(name, damage_type, immunity_type, MAGICAL, PIERCES_BKB)
     kinds[name] = kind
     return kind
 end
@@ -821,13 +819,11 @@ local function enemy_threats(h, ref_dps)
         add("disable", disables * 0.5)
     end
 
-    -- урон с руки растёт с каждым предметом на урон и скорость атаки; сглаживаем (~10 с),
-    -- чтобы баффы в драке не дёргали список
-    local raw_dps = (safe(NPC.GetTrueDamage, h) or 0) * (safe(NPC.GetAttacksPerSecond, h) or 0)
-    if raw_dps ~= raw_dps then
-        raw_dps = 0 -- NaN от игры не должен ломать расчёт
-    end
-    raw_dps = math.max(0, math.min(raw_dps, MAX_DPS)) -- и бесконечность или мусор тоже
+    -- GetTrueDamage - минимум, GetTrueMaximumDamage - максимум: оцениваем средний урон атаки,
+    -- затем умножаем на атаки/с и ограничиваем выбросы. Сглаживание (~10 с) не дёргает список в драке.
+    local raw_dps = Threats.EstimatePhysicalDps(
+        safe(NPC.GetTrueDamage, h), safe(NPC.GetTrueMaximumDamage, h),
+        safe(NPC.GetAttacksPerSecond, h), MAX_DPS)
     local dps = peak.dps and peak.dps + (raw_dps - peak.dps) * 0.1 or raw_dps
     peak.dps = dps
     local relative = dps / ref_dps
