@@ -22,13 +22,16 @@ local Panel = require("ulib.panel")
 local Icons = require("ulib.icons")
 local Http = require("ulib.http")
 local Timer = require("ulib.timer")
+local Recommendations = require("ulib.recommendations")
 
 local counter = {}
 
 local VERSION <const> = "1.6.3"
 local MAX_ABILITY_INDEX <const> = 31
 local LAST_ITEM_SLOT <const> = 16 -- 0-5 инвентарь, 6-8 рюкзак, 9-14 тайник, 15 ТП, 16 нейтральный
+local LAST_ACTIVE_ITEM_SLOT <const> = 5
 local TP_SLOT <const> = 15
+local NEUTRAL_ITEM_SLOT <const> = 16
 local MIN_SCORE <const> = 0.5      -- слабее - не показываем
 local MAX_ENEMIES_SHOWN <const> = 4
 local MIN_ENEMY_SHARE <const> = 0.35 -- врага показываем, если его вклад не меньше 35% от главного
@@ -754,9 +757,12 @@ local function ability_kind(ab, name)
     return kind
 end
 
-local function item_names(h, out)
+-- active_only исключает рюкзак и тайник: их эффекты не активны, пока предмет не перемещён в инвентарь.
+-- Нейтральный предмет в слоте 16 активен; TP (15) не участвует ни в угрозах, ни в защите.
+local function item_names(h, out, active_only)
     for slot = 0, LAST_ITEM_SLOT do
-        if slot ~= TP_SLOT then
+        local active_slot = slot <= LAST_ACTIVE_ITEM_SLOT or slot == NEUTRAL_ITEM_SLOT
+        if slot ~= TP_SLOT and (not active_only or active_slot) then
             local item = NPC.GetItemByIndex(h, slot)
             local name = item and Ability.GetName(item)
             if name and name ~= "" then
@@ -829,7 +835,7 @@ local function enemy_threats(h, ref_dps)
         add("phys", math.min(1, (relative - PHYS_FROM) / (PHYS_FULL - PHYS_FROM)))
     end
 
-    for name in pairs(item_names(h, {})) do
+    for name in pairs(item_names(h, {}, true)) do
         for threat, weight in pairs(ENEMY_ITEMS[name] or {}) do
             add(threat, weight, ENEMY_ITEM_LABELS[name] and name)
         end
@@ -1177,7 +1183,7 @@ local function refresh()
     for _, h in pairs(Heroes.GetAll()) do
         if is_real_hero(h) then
             if Entity.IsSameTeam(h, me) then
-                item_names(h, team_owned)
+                item_names(h, team_owned, true)
             else
                 local label, unit = hero_label(h), NPC.GetUnitName(h)
                 local enemy, dps = enemy_threats(h, ref_dps)
@@ -1199,7 +1205,8 @@ local function refresh()
     end
 
     -- owned_raw - что у героя есть на самом деле; profile.owned - плюс базовые предметы купленных улучшений
-    local owned_raw = item_names(me, {})
+    local owned_raw = item_names(me, {}) -- весь инвентарь: не советуем второй экземпляр уже купленного предмета
+    local owned_active = item_names(me, {}, true) -- только активные слоты учитываются как защита
     local profile = {
         attr = ATTRIBUTES[safe(Hero.GetPrimaryAttribute, me)] or "all",
         melee = not NPC.IsRanged(me),
@@ -1233,41 +1240,28 @@ local function refresh()
         threats.linkens = nil
     end
     -- что уже закрыто твоими способностями и предметами (Rage у Lifestealer, купленный BKB, Pipe союзника...)
-    local cover, cover_labels = my_cover(me, owned_raw, team_owned, threats)
+    local cover, cover_labels = my_cover(me, owned_active, team_owned, threats)
     cover_note = #cover_labels > 0 and L.covered:format(join_top(cover_labels, 3)) or nil
 
     local recs = {}
     for id, c in pairs(COUNTERS) do
         local fit_k = fit_of(id, c, profile)
         if fit_k > 0 and not profile.owned[id] and not (c.team and team_owned[id]) then
-            local score, parts = 0, {}
-            for threat, eff in pairs(c.vs) do
-                local t = threats[threat]
-                if t and eff > 0 then
-                    local k = eff * fit_k * (1 - (cover[threat] or 0))
-                    local s = k * t.total
-                    score = score + s
-                    parts[#parts + 1] = { threat = threat, eff = k, score = s }
-                end
-            end
-            -- уже показанный совет держится до 80% порога, чтобы не мигать у границы
-            if score >= MIN_SCORE or (shown_at[id] and score >= MIN_SCORE * 0.8) then
+            local score, parts = Recommendations.Score(c.vs, threats, fit_k, cover)
+            -- Уже показанный совет держится до 80% порога, чтобы не мигать у границы.
+            if Recommendations.MeetsThreshold(score, MIN_SCORE, shown_at[id] ~= nil) then
                 recs[#recs + 1] = { id = id, counter = c, score = score, parts = parts }
             end
         end
     end
-    table.sort(recs, function(a, b)
-        if a.score ~= b.score then
-            return a.score > b.score
-        end
-        return a.id < b.id
-    end)
+    Recommendations.Sort(recs)
 
     -- новый совет помечаем «новое» (кроме первого списка в матче). Если список поменялся из-за тебя -
     -- другой герой, роль или загрузилась статистика покупок, - это не новость: считаем список первым.
     local profile_key = ("%s|%s|%s"):format(NPC.GetUnitName(me), profile.role, profile.rates and "stats" or "attr")
     if profile_key ~= last_profile_key then
         last_profile_key, first_list_done = profile_key, false
+        shown_at = {} -- не переносим метку «новое» и гистерезис между героями/ролями/источниками fit
     end
     local now = os.clock()
     local new_lines, new_shown, ids = {}, {}, {}
