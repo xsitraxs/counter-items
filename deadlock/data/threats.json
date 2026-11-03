@@ -1,0 +1,33 @@
+{
+  "version": "deadlock-starter-2026.11",
+  "threats": {
+    "physical": "Физический урон",
+    "spirit": "Способности / дух",
+    "burst": "Бурст",
+    "control": "Контроль",
+    "mobility": "Мобильность",
+    "sustain": "Лечение / вампиризм",
+    "stealth": "Невидимость",
+    "range": "Дальний бой",
+    "dot": "ДоТ / кровотечение",
+    "zone": "Зоны / контроль территории",
+    "tank": "Танки",
+    "silence": "Сайленс",
+    "debuff": "Дебаффы"
+  },
+  "order": [
+    "physical",
+    "spirit",
+    "burst",
+    "control",
+    "mobility",
+    "sustain",
+    "stealth",
+    "range",
+    "dot",
+    "zone",
+    "tank",
+    "silence",
+    "debuff"
+  ]
+}

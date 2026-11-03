@@ -1,0 +1,2475 @@
+{
+  "version": "deadlock-starter-2026.11",
+  "items": [
+    {
+      "id": "extra_spirit",
+      "name": "Extra Spirit",
+      "category": "spirit",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "spirit"
+      ],
+      "counters": {},
+      "base": 0.42,
+      "tags": [
+        "spirit",
+        "ability_power"
+      ],
+      "summary": "Дух — базовая сила способностей."
+    },
+    {
+      "id": "improved_burst",
+      "name": "Improved Burst",
+      "category": "spirit",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "burst"
+      ],
+      "counters": {},
+      "base": 0.3,
+      "tags": [
+        "burst",
+        "ability_power"
+      ],
+      "summary": "Усиленный бурст."
+    },
+    {
+      "id": "improved_cooldown",
+      "name": "Improved Cooldown",
+      "category": "spirit",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "cdr"
+      ],
+      "counters": {},
+      "base": 0.36,
+      "tags": [
+        "cdr",
+        "ability_power"
+      ],
+      "summary": "Сокращение перезарядки способностей."
+    },
+    {
+      "id": "improved_reach",
+      "name": "Improved Reach",
+      "category": "spirit",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "range"
+      ],
+      "counters": {
+        "range": 0.4
+      },
+      "base": 0.2,
+      "tags": [
+        "range",
+        "ability_power"
+      ],
+      "summary": "Дальность способностей."
+    },
+    {
+      "id": "improved_spirit",
+      "name": "Improved Spirit",
+      "category": "spirit",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "spirit"
+      ],
+      "counters": {},
+      "base": 0.36,
+      "tags": [
+        "spirit",
+        "ability_power"
+      ],
+      "summary": "Больше духа и урона способностями."
+    },
+    {
+      "id": "bullet_resist_shredder",
+      "name": "Bullet Resist Shredder",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "shred"
+      ],
+      "counters": {
+        "tank": 0.6
+      },
+      "base": 0.08,
+      "tags": [
+        "shred",
+        "ability_power"
+      ],
+      "summary": "Снижает сопротивление танков."
+    },
+    {
+      "id": "cold_front",
+      "name": "Cold Front",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "control"
+      ],
+      "counters": {
+        "mobility": 0.55,
+        "range": 0.3
+      },
+      "base": 0.1,
+      "tags": [
+        "control",
+        "debuff"
+      ],
+      "summary": "Холод и замедление."
+    },
+    {
+      "id": "curse",
+      "name": "Curse",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "debuff",
+        "control"
+      ],
+      "counters": {
+        "mobility": 0.4,
+        "range": 0.25
+      },
+      "base": 0.12,
+      "tags": [
+        "debuff",
+        "control"
+      ],
+      "summary": "Проклятие и дебафф."
+    },
+    {
+      "id": "decay",
+      "name": "Decay",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "debuff",
+        "dot"
+      ],
+      "counters": {
+        "sustain": 0.3,
+        "mobility": 0.3
+      },
+      "base": 0.12,
+      "tags": [
+        "debuff",
+        "dot"
+      ],
+      "summary": "Разложение и ДоТ."
+    },
+    {
+      "id": "duration_extender",
+      "name": "Duration Extender",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "duration"
+      ],
+      "counters": {},
+      "base": 0.2,
+      "tags": [
+        "duration",
+        "ability_power"
+      ],
+      "summary": "Длительность эффектов."
+    },
+    {
+      "id": "echo_shard",
+      "name": "Echo Shard",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "spirit"
+      ],
+      "counters": {},
+      "base": 0.26,
+      "tags": [
+        "spirit",
+        "ability_power"
+      ],
+      "summary": "Дух и усиление способностей."
+    },
+    {
+      "id": "escalating_exposure",
+      "name": "Escalating Exposure",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "amplify"
+      ],
+      "counters": {
+        "tank": 0.35,
+        "burst": 0.2
+      },
+      "base": 0.14,
+      "tags": [
+        "amplify",
+        "ability_power"
+      ],
+      "summary": "Растущий урон по цели."
+    },
+    {
+      "id": "ethereal_shift",
+      "name": "Ethereal Shift",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "escape",
+        "mobility"
+      ],
+      "counters": {
+        "control": 0.4,
+        "burst": 0.3,
+        "range": 0.25
+      },
+      "base": 0.1,
+      "tags": [
+        "escape",
+        "active",
+        "mobility"
+      ],
+      "summary": "Уход в небытие — ответ на контроль и бурст."
+    },
+    {
+      "id": "extra_charge",
+      "name": "Extra Charge",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "charge"
+      ],
+      "counters": {},
+      "base": 0.2,
+      "tags": [
+        "charge",
+        "ability_power"
+      ],
+      "summary": "Дополнительные заряды способностей."
+    },
+    {
+      "id": "knockdown",
+      "name": "Knockdown",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "control"
+      ],
+      "counters": {
+        "mobility": 0.6,
+        "range": 0.3,
+        "burst": 0.2
+      },
+      "base": 0.1,
+      "tags": [
+        "control",
+        "active"
+      ],
+      "summary": "Сбивает с ног — контроль."
+    },
+    {
+      "id": "mystic_burst",
+      "name": "Mystic Burst",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "burst"
+      ],
+      "counters": {},
+      "base": 0.24,
+      "tags": [
+        "burst",
+        "ability_power"
+      ],
+      "summary": "Взрывной урон способностями."
+    },
+    {
+      "id": "mystic_reach",
+      "name": "Mystic Reach",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "range"
+      ],
+      "counters": {
+        "range": 0.4
+      },
+      "base": 0.2,
+      "tags": [
+        "range",
+        "ability_power"
+      ],
+      "summary": "Дальность способностей."
+    },
+    {
+      "id": "mystic_slow",
+      "name": "Mystic Slow",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "control"
+      ],
+      "counters": {
+        "mobility": 0.55,
+        "range": 0.3,
+        "burst": 0.2
+      },
+      "base": 0.12,
+      "tags": [
+        "control",
+        "active"
+      ],
+      "summary": "Замедление — мешает мобильным героям."
+    },
+    {
+      "id": "mystic_vulnerability",
+      "name": "Mystic Vulnerability",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "amplify"
+      ],
+      "counters": {
+        "tank": 0.35,
+        "burst": 0.2
+      },
+      "base": 0.14,
+      "tags": [
+        "amplify",
+        "ability_power"
+      ],
+      "summary": "Усиление получаемого урона."
+    },
+    {
+      "id": "quicksilver_reload",
+      "name": "Quicksilver Reload",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "weapon"
+      ],
+      "counters": {},
+      "base": 0.12,
+      "tags": [
+        "weapon",
+        "active"
+      ],
+      "summary": "Быстрая перезарядка оружия."
+    },
+    {
+      "id": "rapid_recharge",
+      "name": "Rapid Recharge",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "cdr"
+      ],
+      "counters": {},
+      "base": 0.24,
+      "tags": [
+        "cdr",
+        "ability_power"
+      ],
+      "summary": "Быстрое восстановление способностей."
+    },
+    {
+      "id": "silence_glyph",
+      "name": "Silence Glyph",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "silence"
+      ],
+      "counters": {
+        "spirit": 0.45,
+        "control": 0.2
+      },
+      "base": 0.08,
+      "tags": [
+        "silence",
+        "active"
+      ],
+      "summary": "Сайленс против кастеров."
+    },
+    {
+      "id": "slowing_hex",
+      "name": "Slowing Hex",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "control"
+      ],
+      "counters": {
+        "mobility": 0.55,
+        "range": 0.3
+      },
+      "base": 0.1,
+      "tags": [
+        "control",
+        "debuff"
+      ],
+      "summary": "Замедление и дебафф."
+    },
+    {
+      "id": "spirit_sap",
+      "name": "Spirit Sap",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "sustain",
+        "spirit"
+      ],
+      "counters": {
+        "dot": 0.3
+      },
+      "base": 0.16,
+      "tags": [
+        "sustain",
+        "spirit"
+      ],
+      "summary": "Вампиризм от способностей."
+    },
+    {
+      "id": "spirit_strike",
+      "name": "Spirit Strike",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "spirit"
+      ],
+      "counters": {},
+      "base": 0.24,
+      "tags": [
+        "spirit",
+        "ability_power"
+      ],
+      "summary": "Удар духом."
+    },
+    {
+      "id": "suppressor",
+      "name": "Suppressor",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "silence"
+      ],
+      "counters": {
+        "spirit": 0.4,
+        "control": 0.2
+      },
+      "base": 0.08,
+      "tags": [
+        "silence",
+        "ability_power"
+      ],
+      "summary": "Подавление способностей."
+    },
+    {
+      "id": "tankbuster",
+      "name": "Tankbuster",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "tank_buster"
+      ],
+      "counters": {
+        "tank": 0.8
+      },
+      "base": 0.1,
+      "tags": [
+        "tank_buster",
+        "ability_power"
+      ],
+      "summary": "Урон по танкам."
+    },
+    {
+      "id": "withering_whip",
+      "name": "Withering Whip",
+      "category": "spirit",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "control"
+      ],
+      "counters": {
+        "mobility": 0.5,
+        "range": 0.3
+      },
+      "base": 0.1,
+      "tags": [
+        "control",
+        "debuff"
+      ],
+      "summary": "Замедление."
+    },
+    {
+      "id": "boundless_spirit",
+      "name": "Boundless Spirit",
+      "category": "spirit",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "spirit"
+      ],
+      "counters": {},
+      "base": 0.3,
+      "tags": [
+        "spirit",
+        "ability_power"
+      ],
+      "summary": "Максимальная сила духа."
+    },
+    {
+      "id": "mystic_reverb",
+      "name": "Mystic Reverb",
+      "category": "spirit",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "spirit",
+        "burst"
+      ],
+      "counters": {},
+      "base": 0.3,
+      "tags": [
+        "spirit",
+        "burst",
+        "ability_power"
+      ],
+      "summary": "Сильный дух и бурст."
+    },
+    {
+      "id": "refresher",
+      "name": "Refresher",
+      "category": "spirit",
+      "tier": 4,
+      "cost": 6400,
+      "active": true,
+      "families": [
+        "cdr",
+        "burst"
+      ],
+      "counters": {},
+      "base": 0.18,
+      "tags": [
+        "cdr",
+        "active",
+        "burst"
+      ],
+      "summary": "Сброс перезарядок — усиливает бурст."
+    },
+    {
+      "id": "spirit_burn",
+      "name": "Spirit Burn",
+      "category": "spirit",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "antiheal",
+        "spirit"
+      ],
+      "counters": {
+        "sustain": 0.9
+      },
+      "base": 0.12,
+      "tags": [
+        "antiheal",
+        "spirit"
+      ],
+      "summary": "Анти-лечение и урон духом."
+    },
+    {
+      "id": "superior_cooldown",
+      "name": "Superior Cooldown",
+      "category": "spirit",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "cdr"
+      ],
+      "counters": {},
+      "base": 0.28,
+      "tags": [
+        "cdr",
+        "ability_power"
+      ],
+      "summary": "Максимальное сокращение перезарядки."
+    },
+    {
+      "id": "superior_duration",
+      "name": "Superior Duration",
+      "category": "spirit",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "duration"
+      ],
+      "counters": {},
+      "base": 0.24,
+      "tags": [
+        "duration",
+        "ability_power"
+      ],
+      "summary": "Максимальная длительность."
+    },
+    {
+      "id": "surge_of_power",
+      "name": "Surge of Power",
+      "category": "spirit",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "spirit"
+      ],
+      "counters": {},
+      "base": 0.28,
+      "tags": [
+        "spirit",
+        "ability_power"
+      ],
+      "summary": "Мощный дух."
+    },
+    {
+      "id": "torment_pulse",
+      "name": "Torment Pulse",
+      "category": "spirit",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "burst"
+      ],
+      "counters": {},
+      "base": 0.2,
+      "tags": [
+        "burst",
+        "ability_power"
+      ],
+      "summary": "АоЕ-урон способностями."
+    },
+    {
+      "id": "enduring_spirit",
+      "name": "Enduring Spirit",
+      "category": "vitality",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "spirit",
+        "health"
+      ],
+      "counters": {},
+      "base": 0.3,
+      "tags": [
+        "spirit",
+        "health"
+      ],
+      "summary": "Дух и здоровье для гибридных героев."
+    },
+    {
+      "id": "extra_health",
+      "name": "Extra Health",
+      "category": "vitality",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "health"
+      ],
+      "counters": {},
+      "base": 0.42,
+      "tags": [
+        "health",
+        "survive"
+      ],
+      "summary": "Здоровье и живучесть в ранней игре."
+    },
+    {
+      "id": "extra_regen",
+      "name": "Extra Regen",
+      "category": "vitality",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "dot": 0.55,
+        "burst": 0.25
+      },
+      "base": 0.36,
+      "tags": [
+        "sustain",
+        "regen"
+      ],
+      "summary": "Регенерация против ДоТ и затяжных разменов."
+    },
+    {
+      "id": "extra_stamina",
+      "name": "Extra Stamina",
+      "category": "vitality",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "stamina"
+      ],
+      "counters": {},
+      "base": 0.32,
+      "tags": [
+        "stamina",
+        "survive"
+      ],
+      "summary": "Выносливость для долгих драк."
+    },
+    {
+      "id": "grit",
+      "name": "Grit",
+      "category": "vitality",
+      "tier": 1,
+      "cost": 800,
+      "active": true,
+      "families": [
+        "barrier"
+      ],
+      "counters": {
+        "burst": 0.55,
+        "physical": 0.25,
+        "spirit": 0.25
+      },
+      "base": 0.3,
+      "tags": [
+        "barrier",
+        "active",
+        "survive"
+      ],
+      "summary": "Короткий барьер — дешёвый активный слой защиты."
+    },
+    {
+      "id": "healing_rite",
+      "name": "Healing Rite",
+      "category": "vitality",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "dot": 0.5,
+        "burst": 0.2
+      },
+      "base": 0.34,
+      "tags": [
+        "sustain",
+        "heal"
+      ],
+      "summary": "Лечение и восстановление в файте."
+    },
+    {
+      "id": "melee_lifesteal",
+      "name": "Melee Lifesteal",
+      "category": "vitality",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "dot": 0.35,
+        "burst": 0.2
+      },
+      "base": 0.3,
+      "tags": [
+        "sustain",
+        "melee"
+      ],
+      "summary": "Вампиризм для ближнего боя."
+    },
+    {
+      "id": "sprint_boots",
+      "name": "Sprint Boots",
+      "category": "vitality",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "mobility"
+      ],
+      "counters": {
+        "range": 0.35,
+        "zone": 0.25,
+        "burst": 0.15
+      },
+      "base": 0.28,
+      "tags": [
+        "mobility",
+        "boots"
+      ],
+      "summary": "Скорость передвижения и смена позиции."
+    },
+    {
+      "id": "bullet_armor",
+      "name": "Bullet Armor",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "resist_physical"
+      ],
+      "counters": {
+        "physical": 0.9
+      },
+      "base": 0.1,
+      "tags": [
+        "resist_physical",
+        "survive"
+      ],
+      "summary": "Сопротивление физическому урону."
+    },
+    {
+      "id": "bullet_lifesteal",
+      "name": "Bullet Lifesteal",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "physical": 0.2,
+        "dot": 0.3
+      },
+      "base": 0.14,
+      "tags": [
+        "sustain",
+        "weapon"
+      ],
+      "summary": "Вампиризм от пуль."
+    },
+    {
+      "id": "debuff_reducer",
+      "name": "Debuff Reducer",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "debuff"
+      ],
+      "counters": {
+        "debuff": 0.8,
+        "control": 0.45
+      },
+      "base": 0.1,
+      "tags": [
+        "debuff",
+        "survive"
+      ],
+      "summary": "Сокращает длительность дебаффов."
+    },
+    {
+      "id": "debuff_remover",
+      "name": "Debuff Remover",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": true,
+      "families": [
+        "cleanse"
+      ],
+      "counters": {
+        "control": 0.95,
+        "debuff": 0.85,
+        "silence": 0.4
+      },
+      "base": 0.12,
+      "tags": [
+        "cleanse",
+        "active",
+        "survive"
+      ],
+      "summary": "Снимает контроль и дебаффы — ответ на хексы, сайленс и дизейблы."
+    },
+    {
+      "id": "enchanters_emblem",
+      "name": "Enchanter's Emblem",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "sustain",
+        "spirit"
+      ],
+      "counters": {
+        "dot": 0.3
+      },
+      "base": 0.16,
+      "tags": [
+        "sustain",
+        "spirit"
+      ],
+      "summary": "Дух и вампиризм для гибридного героя."
+    },
+    {
+      "id": "enduring_speed",
+      "name": "Enduring Speed",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "mobility"
+      ],
+      "counters": {
+        "range": 0.35,
+        "zone": 0.25,
+        "burst": 0.15
+      },
+      "base": 0.14,
+      "tags": [
+        "mobility",
+        "speed"
+      ],
+      "summary": "Скорость и устойчивость к замедлению."
+    },
+    {
+      "id": "guardian_ward",
+      "name": "Guardian Ward",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "vision"
+      ],
+      "counters": {
+        "stealth": 0.8
+      },
+      "base": 0.06,
+      "tags": [
+        "vision",
+        "stealth_counter"
+      ],
+      "summary": "Вартование/обзор — частичный ответ на невидимость."
+    },
+    {
+      "id": "healbane",
+      "name": "Healbane",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "antiheal"
+      ],
+      "counters": {
+        "sustain": 0.9
+      },
+      "base": 0.1,
+      "tags": [
+        "antiheal",
+        "heal_cut"
+      ],
+      "summary": "Анти-лечение против вампиров и лекарей."
+    },
+    {
+      "id": "healing_booster",
+      "name": "Healing Booster",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "dot": 0.55,
+        "burst": 0.2
+      },
+      "base": 0.16,
+      "tags": [
+        "sustain",
+        "heal"
+      ],
+      "summary": "Усиленное лечение."
+    },
+    {
+      "id": "reactive_barrier",
+      "name": "Reactive Barrier",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "barrier"
+      ],
+      "counters": {
+        "burst": 0.55,
+        "physical": 0.25,
+        "spirit": 0.25
+      },
+      "base": 0.14,
+      "tags": [
+        "barrier",
+        "survive"
+      ],
+      "summary": "Барьер против бурста."
+    },
+    {
+      "id": "restorative_locket",
+      "name": "Restorative Locket",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "dot": 0.55,
+        "burst": 0.2
+      },
+      "base": 0.16,
+      "tags": [
+        "sustain",
+        "heal"
+      ],
+      "summary": "Лечение и восстановление."
+    },
+    {
+      "id": "return_fire",
+      "name": "Return Fire",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "reflect"
+      ],
+      "counters": {
+        "physical": 0.45,
+        "spirit": 0.4
+      },
+      "base": 0.08,
+      "tags": [
+        "reflect",
+        "survive"
+      ],
+      "summary": "Отражает часть урона обратно."
+    },
+    {
+      "id": "spirit_armor",
+      "name": "Spirit Armor",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "resist_spirit"
+      ],
+      "counters": {
+        "spirit": 0.9
+      },
+      "base": 0.1,
+      "tags": [
+        "resist_spirit",
+        "survive"
+      ],
+      "summary": "Сопротивление урону способностями."
+    },
+    {
+      "id": "spirit_lifesteal",
+      "name": "Spirit Lifesteal",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "spirit": 0.2,
+        "dot": 0.3
+      },
+      "base": 0.14,
+      "tags": [
+        "sustain",
+        "spirit"
+      ],
+      "summary": "Вампиризм от способностей."
+    },
+    {
+      "id": "spirit_shielding",
+      "name": "Spirit Shielding",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "barrier",
+        "resist_spirit"
+      ],
+      "counters": {
+        "spirit": 0.5,
+        "burst": 0.45
+      },
+      "base": 0.14,
+      "tags": [
+        "barrier",
+        "resist_spirit"
+      ],
+      "summary": "Щит и сопротивление духу."
+    },
+    {
+      "id": "trophy_collector",
+      "name": "Trophy Collector",
+      "category": "vitality",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "economy"
+      ],
+      "counters": {},
+      "base": 0.08,
+      "tags": [
+        "economy",
+        "souls"
+      ],
+      "summary": "Экономика: больше душ за убийства."
+    },
+    {
+      "id": "counterspell",
+      "name": "Counterspell",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "spell_immune"
+      ],
+      "counters": {
+        "spirit": 0.65,
+        "control": 0.6,
+        "silence": 0.4
+      },
+      "base": 0.08,
+      "tags": [
+        "spell_immune",
+        "active",
+        "survive"
+      ],
+      "summary": "Иммунитет к способностям на короткое время."
+    },
+    {
+      "id": "dispel_magic",
+      "name": "Dispel Magic",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "cleanse"
+      ],
+      "counters": {
+        "control": 0.8,
+        "debuff": 0.8,
+        "silence": 0.35
+      },
+      "base": 0.08,
+      "tags": [
+        "cleanse",
+        "active"
+      ],
+      "summary": "Снимает дебаффы и контроль."
+    },
+    {
+      "id": "fortitude",
+      "name": "Fortitude",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "health",
+        "sustain"
+      ],
+      "counters": {
+        "burst": 0.45,
+        "dot": 0.3
+      },
+      "base": 0.2,
+      "tags": [
+        "health",
+        "sustain"
+      ],
+      "summary": "Здоровье и регенерация."
+    },
+    {
+      "id": "fury_trance",
+      "name": "Fury Trance",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "damage"
+      ],
+      "counters": {
+        "tank": 0.2
+      },
+      "base": 0.14,
+      "tags": [
+        "damage",
+        "survive"
+      ],
+      "summary": "Урон и живучесть в драке."
+    },
+    {
+      "id": "healing_nova",
+      "name": "Healing Nova",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "support",
+        "sustain"
+      ],
+      "counters": {
+        "sustain": 0.2
+      },
+      "base": 0.12,
+      "tags": [
+        "support",
+        "active",
+        "heal"
+      ],
+      "summary": "АоЕ-лечение союзников."
+    },
+    {
+      "id": "improved_bullet_armor",
+      "name": "Improved Bullet Armor",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "resist_physical"
+      ],
+      "counters": {
+        "physical": 0.95
+      },
+      "base": 0.1,
+      "tags": [
+        "resist_physical",
+        "survive"
+      ],
+      "summary": "Улучшенная броня от пуль."
+    },
+    {
+      "id": "improved_spirit_armor",
+      "name": "Improved Spirit Armor",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "resist_spirit"
+      ],
+      "counters": {
+        "spirit": 0.95
+      },
+      "base": 0.1,
+      "tags": [
+        "resist_spirit",
+        "survive"
+      ],
+      "summary": "Улучшенное сопротивление духу."
+    },
+    {
+      "id": "lifestrike",
+      "name": "Lifestrike",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "dot": 0.4,
+        "burst": 0.2
+      },
+      "base": 0.16,
+      "tags": [
+        "sustain",
+        "lifesteal"
+      ],
+      "summary": "Вампиризм и лечение."
+    },
+    {
+      "id": "majestic_leap",
+      "name": "Majestic Leap",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "mobility",
+        "escape"
+      ],
+      "counters": {
+        "range": 0.4,
+        "zone": 0.3,
+        "burst": 0.2
+      },
+      "base": 0.12,
+      "tags": [
+        "mobility",
+        "active",
+        "escape"
+      ],
+      "summary": "Прыжок для разрыва дистанции."
+    },
+    {
+      "id": "metal_skin",
+      "name": "Metal Skin",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "resist_physical"
+      ],
+      "counters": {
+        "physical": 1.0
+      },
+      "base": 0.1,
+      "tags": [
+        "resist_physical",
+        "survive"
+      ],
+      "summary": "Мощная физическая броня против gun-героев."
+    },
+    {
+      "id": "rescue_beam",
+      "name": "Rescue Beam",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "support",
+        "sustain"
+      ],
+      "counters": {
+        "sustain": 0.2
+      },
+      "base": 0.12,
+      "tags": [
+        "support",
+        "active",
+        "heal"
+      ],
+      "summary": "Лечение союзника — усиливает команду."
+    },
+    {
+      "id": "siphon_bullets",
+      "name": "Siphon Bullets",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "sustain",
+        "resist_physical"
+      ],
+      "counters": {
+        "physical": 0.4,
+        "dot": 0.3
+      },
+      "base": 0.16,
+      "tags": [
+        "sustain",
+        "resist_physical"
+      ],
+      "summary": "Вампиризм и физическая защита."
+    },
+    {
+      "id": "spirit_resilience",
+      "name": "Spirit Resilience",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "resist_spirit"
+      ],
+      "counters": {
+        "spirit": 0.95
+      },
+      "base": 0.1,
+      "tags": [
+        "resist_spirit",
+        "survive"
+      ],
+      "summary": "Сопротивление урону способностями."
+    },
+    {
+      "id": "stamina_mastery",
+      "name": "Stamina Mastery",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "stamina"
+      ],
+      "counters": {},
+      "base": 0.16,
+      "tags": [
+        "stamina",
+        "survive"
+      ],
+      "summary": "Выносливость для затяжных драк."
+    },
+    {
+      "id": "superior_stamina",
+      "name": "Superior Stamina",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "stamina"
+      ],
+      "counters": {},
+      "base": 0.16,
+      "tags": [
+        "stamina",
+        "survive"
+      ],
+      "summary": "Продвинутая выносливость."
+    },
+    {
+      "id": "veil_walker",
+      "name": "Veil Walker",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "spirit",
+        "mobility"
+      ],
+      "counters": {
+        "spirit": 0.25,
+        "range": 0.2
+      },
+      "base": 0.14,
+      "tags": [
+        "spirit",
+        "mobility"
+      ],
+      "summary": "Дух и мобильность."
+    },
+    {
+      "id": "warp_stone",
+      "name": "Warp Stone",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "mobility",
+        "escape"
+      ],
+      "counters": {
+        "range": 0.45,
+        "zone": 0.3,
+        "burst": 0.2,
+        "control": 0.15
+      },
+      "base": 0.12,
+      "tags": [
+        "mobility",
+        "active",
+        "escape"
+      ],
+      "summary": "Телепорт/смена позиции — ответ на дальний бой и зоны."
+    },
+    {
+      "id": "weapon_shielding",
+      "name": "Weapon Shielding",
+      "category": "vitality",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "resist_physical"
+      ],
+      "counters": {
+        "physical": 0.95
+      },
+      "base": 0.1,
+      "tags": [
+        "resist_physical",
+        "survive"
+      ],
+      "summary": "Сильное сопротивление физическому урону."
+    },
+    {
+      "id": "cheat_death",
+      "name": "Cheat Death",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": true,
+      "families": [
+        "revive"
+      ],
+      "counters": {
+        "burst": 0.7
+      },
+      "base": 0.08,
+      "tags": [
+        "revive",
+        "active",
+        "survive"
+      ],
+      "summary": "Возрождение после смертельного урона."
+    },
+    {
+      "id": "colossus",
+      "name": "Colossus",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "health",
+        "tank"
+      ],
+      "counters": {
+        "burst": 0.5,
+        "physical": 0.3,
+        "spirit": 0.3
+      },
+      "base": 0.2,
+      "tags": [
+        "health",
+        "tank"
+      ],
+      "summary": "Огромный запас здоровья."
+    },
+    {
+      "id": "divine_barrier",
+      "name": "Divine Barrier",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "barrier"
+      ],
+      "counters": {
+        "burst": 0.6,
+        "physical": 0.3,
+        "spirit": 0.3
+      },
+      "base": 0.14,
+      "tags": [
+        "barrier",
+        "survive"
+      ],
+      "summary": "Сильный барьер."
+    },
+    {
+      "id": "diviners_kevlar",
+      "name": "Diviner's Kevlar",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "resist_spirit"
+      ],
+      "counters": {
+        "spirit": 1.0
+      },
+      "base": 0.12,
+      "tags": [
+        "resist_spirit",
+        "survive"
+      ],
+      "summary": "Сильное сопротивление духу."
+    },
+    {
+      "id": "healing_tempo",
+      "name": "Healing Tempo",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "dot": 0.45,
+        "burst": 0.2
+      },
+      "base": 0.18,
+      "tags": [
+        "sustain",
+        "heal"
+      ],
+      "summary": "Сильное лечение."
+    },
+    {
+      "id": "indomitable",
+      "name": "Indomitable",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "health",
+        "sustain"
+      ],
+      "counters": {
+        "burst": 0.5,
+        "dot": 0.3
+      },
+      "base": 0.2,
+      "tags": [
+        "health",
+        "sustain"
+      ],
+      "summary": "Здоровье и регенерация."
+    },
+    {
+      "id": "infuser",
+      "name": "Infuser",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "spirit",
+        "sustain"
+      ],
+      "counters": {
+        "spirit": 0.2
+      },
+      "base": 0.16,
+      "tags": [
+        "spirit",
+        "sustain"
+      ],
+      "summary": "Дух и поддержка способностей."
+    },
+    {
+      "id": "inhibitor",
+      "name": "Inhibitor",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "antiheal"
+      ],
+      "counters": {
+        "sustain": 1.0
+      },
+      "base": 0.1,
+      "tags": [
+        "antiheal",
+        "heal_cut"
+      ],
+      "summary": "Сильное анти-лечение."
+    },
+    {
+      "id": "juggernaut",
+      "name": "Juggernaut",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "resist_physical",
+        "tank"
+      ],
+      "counters": {
+        "physical": 1.0,
+        "burst": 0.3
+      },
+      "base": 0.12,
+      "tags": [
+        "resist_physical",
+        "tank"
+      ],
+      "summary": "Физическая броня и живучесть."
+    },
+    {
+      "id": "leech",
+      "name": "Leech",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "dot": 0.45,
+        "burst": 0.2
+      },
+      "base": 0.18,
+      "tags": [
+        "sustain",
+        "lifesteal"
+      ],
+      "summary": "Сильный вампиризм."
+    },
+    {
+      "id": "phantom_strike",
+      "name": "Phantom Strike",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": true,
+      "families": [
+        "mobility",
+        "escape"
+      ],
+      "counters": {
+        "range": 0.4,
+        "zone": 0.3,
+        "burst": 0.2
+      },
+      "base": 0.1,
+      "tags": [
+        "mobility",
+        "active",
+        "escape"
+      ],
+      "summary": "Рывок/смена позиции."
+    },
+    {
+      "id": "plated_armor",
+      "name": "Plated Armor",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "resist_physical"
+      ],
+      "counters": {
+        "physical": 1.0
+      },
+      "base": 0.12,
+      "tags": [
+        "resist_physical",
+        "tank"
+      ],
+      "summary": "Максимальная физическая броня."
+    },
+    {
+      "id": "soul_rebirth",
+      "name": "Soul Rebirth",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": true,
+      "families": [
+        "revive"
+      ],
+      "counters": {
+        "burst": 0.7
+      },
+      "base": 0.08,
+      "tags": [
+        "revive",
+        "active",
+        "survive"
+      ],
+      "summary": "Возрождение и восстановление."
+    },
+    {
+      "id": "spellbreaker",
+      "name": "Spellbreaker",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "resist_spirit"
+      ],
+      "counters": {
+        "spirit": 1.0
+      },
+      "base": 0.12,
+      "tags": [
+        "resist_spirit",
+        "survive"
+      ],
+      "summary": "Максимальное сопротивление духу."
+    },
+    {
+      "id": "unstoppable",
+      "name": "Unstoppable",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": true,
+      "families": [
+        "cc_immune",
+        "cleanse"
+      ],
+      "counters": {
+        "control": 1.0,
+        "debuff": 0.6
+      },
+      "base": 0.1,
+      "tags": [
+        "cc_immune",
+        "active",
+        "survive"
+      ],
+      "summary": "Иммунитет к контролю — главный ответ на control-команды."
+    },
+    {
+      "id": "vampiric_burst",
+      "name": "Vampiric Burst",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "sustain"
+      ],
+      "counters": {
+        "dot": 0.45,
+        "burst": 0.2
+      },
+      "base": 0.18,
+      "tags": [
+        "sustain",
+        "lifesteal"
+      ],
+      "summary": "Вампиризм в драке."
+    },
+    {
+      "id": "witchmail",
+      "name": "Witchmail",
+      "category": "vitality",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "resist_spirit",
+        "reflect"
+      ],
+      "counters": {
+        "spirit": 0.7,
+        "physical": 0.3
+      },
+      "base": 0.12,
+      "tags": [
+        "resist_spirit",
+        "reflect"
+      ],
+      "summary": "Сопротивление духу и отражение урона."
+    },
+    {
+      "id": "basic_magazine",
+      "name": "Basic Magazine",
+      "category": "weapon",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "weapon"
+      ],
+      "counters": {},
+      "base": 0.42,
+      "tags": [
+        "weapon",
+        "damage"
+      ],
+      "summary": "Магазин и урон оружия — базовый DPS."
+    },
+    {
+      "id": "monster_rounds",
+      "name": "Monster Rounds",
+      "category": "weapon",
+      "tier": 1,
+      "cost": 800,
+      "active": false,
+      "families": [
+        "weapon",
+        "lane"
+      ],
+      "counters": {},
+      "base": 0.34,
+      "tags": [
+        "weapon",
+        "damage",
+        "lane"
+      ],
+      "summary": "Урон по NPC и духам на линии."
+    },
+    {
+      "id": "fleetfoot",
+      "name": "Fleetfoot",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "mobility"
+      ],
+      "counters": {
+        "range": 0.35,
+        "zone": 0.25,
+        "burst": 0.15
+      },
+      "base": 0.14,
+      "tags": [
+        "mobility",
+        "speed"
+      ],
+      "summary": "Скорость и устойчивость к замедлению."
+    },
+    {
+      "id": "headhunter",
+      "name": "Headhunter",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "burst"
+      ],
+      "counters": {},
+      "base": 0.3,
+      "tags": [
+        "burst",
+        "weapon",
+        "damage"
+      ],
+      "summary": "Бонусный урон по цели."
+    },
+    {
+      "id": "high_velocity_mag",
+      "name": "High-Velocity Mag",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "weapon"
+      ],
+      "counters": {},
+      "base": 0.28,
+      "tags": [
+        "weapon",
+        "damage"
+      ],
+      "summary": "Скорость пуль и урон."
+    },
+    {
+      "id": "long_range",
+      "name": "Long Range",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "range"
+      ],
+      "counters": {
+        "range": 0.4
+      },
+      "base": 0.2,
+      "tags": [
+        "range",
+        "weapon"
+      ],
+      "summary": "Дальность оружия."
+    },
+    {
+      "id": "lucky_shot",
+      "name": "Lucky Shot",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "crit"
+      ],
+      "counters": {
+        "tank": 0.25
+      },
+      "base": 0.2,
+      "tags": [
+        "crit",
+        "weapon"
+      ],
+      "summary": "Критический урон."
+    },
+    {
+      "id": "mystic_shot",
+      "name": "Mystic Shot",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "spirit",
+        "weapon"
+      ],
+      "counters": {},
+      "base": 0.24,
+      "tags": [
+        "spirit",
+        "weapon"
+      ],
+      "summary": "Урон духом с оружия."
+    },
+    {
+      "id": "point_blank",
+      "name": "Point Blank",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "close_range"
+      ],
+      "counters": {
+        "range": 0.3
+      },
+      "base": 0.24,
+      "tags": [
+        "close_range",
+        "weapon"
+      ],
+      "summary": "Урон вблизи — против дальних героев."
+    },
+    {
+      "id": "rapid_rounds",
+      "name": "Rapid Rounds",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "weapon"
+      ],
+      "counters": {},
+      "base": 0.28,
+      "tags": [
+        "weapon",
+        "damage"
+      ],
+      "summary": "Скорострельность."
+    },
+    {
+      "id": "slowing_bullets",
+      "name": "Slowing Bullets",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "control"
+      ],
+      "counters": {
+        "mobility": 0.5,
+        "range": 0.3
+      },
+      "base": 0.12,
+      "tags": [
+        "control",
+        "weapon"
+      ],
+      "summary": "Замедление пулями."
+    },
+    {
+      "id": "spirit_shredder",
+      "name": "Spirit Shredder",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "spirit",
+        "shred"
+      ],
+      "counters": {
+        "spirit": 0.3
+      },
+      "base": 0.18,
+      "tags": [
+        "spirit",
+        "weapon"
+      ],
+      "summary": "Урон духом и снижение сопротивления."
+    },
+    {
+      "id": "toxic_bullets",
+      "name": "Toxic Bullets",
+      "category": "weapon",
+      "tier": 2,
+      "cost": 1600,
+      "active": false,
+      "families": [
+        "dot"
+      ],
+      "counters": {
+        "sustain": 0.35,
+        "burst": 0.15
+      },
+      "base": 0.16,
+      "tags": [
+        "dot",
+        "weapon"
+      ],
+      "summary": "Яд — ДоТ и давление на лечение."
+    },
+    {
+      "id": "berserker",
+      "name": "Berserker",
+      "category": "weapon",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "weapon"
+      ],
+      "counters": {},
+      "base": 0.24,
+      "tags": [
+        "weapon",
+        "damage"
+      ],
+      "summary": "Скорость атаки и урон."
+    },
+    {
+      "id": "close_quarters",
+      "name": "Close Quarters",
+      "category": "weapon",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "close_range"
+      ],
+      "counters": {
+        "range": 0.35
+      },
+      "base": 0.22,
+      "tags": [
+        "close_range",
+        "weapon"
+      ],
+      "summary": "Урон вблизи."
+    },
+    {
+      "id": "frenzy",
+      "name": "Frenzy",
+      "category": "weapon",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "weapon"
+      ],
+      "counters": {},
+      "base": 0.24,
+      "tags": [
+        "weapon",
+        "damage"
+      ],
+      "summary": "Ярость и скорость атаки."
+    },
+    {
+      "id": "headshot_booster",
+      "name": "Headshot Booster",
+      "category": "weapon",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "crit"
+      ],
+      "counters": {
+        "tank": 0.3
+      },
+      "base": 0.2,
+      "tags": [
+        "crit",
+        "weapon"
+      ],
+      "summary": "Усиление хедшотов."
+    },
+    {
+      "id": "heroic_aura",
+      "name": "Heroic Aura",
+      "category": "weapon",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "damage"
+      ],
+      "counters": {
+        "tank": 0.2
+      },
+      "base": 0.22,
+      "tags": [
+        "damage",
+        "weapon"
+      ],
+      "summary": "Урон и аура."
+    },
+    {
+      "id": "hunters_aura",
+      "name": "Hunter's Aura",
+      "category": "weapon",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "vision"
+      ],
+      "counters": {
+        "stealth": 0.8
+      },
+      "base": 0.06,
+      "tags": [
+        "vision",
+        "stealth_counter"
+      ],
+      "summary": "Обзор — частичный ответ на невидимость."
+    },
+    {
+      "id": "kinetic_dash",
+      "name": "Kinetic Dash",
+      "category": "weapon",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "mobility",
+        "escape"
+      ],
+      "counters": {
+        "range": 0.4,
+        "zone": 0.3,
+        "burst": 0.2
+      },
+      "base": 0.1,
+      "tags": [
+        "mobility",
+        "active",
+        "escape"
+      ],
+      "summary": "Рывок для смены позиции."
+    },
+    {
+      "id": "melee_charge",
+      "name": "Melee Charge",
+      "category": "weapon",
+      "tier": 3,
+      "cost": 3200,
+      "active": true,
+      "families": [
+        "mobility"
+      ],
+      "counters": {
+        "range": 0.35,
+        "zone": 0.25
+      },
+      "base": 0.1,
+      "tags": [
+        "mobility",
+        "active"
+      ],
+      "summary": "Рывок в ближний бой."
+    },
+    {
+      "id": "sharpshooter",
+      "name": "Sharpshooter",
+      "category": "weapon",
+      "tier": 3,
+      "cost": 3200,
+      "active": false,
+      "families": [
+        "range"
+      ],
+      "counters": {
+        "range": 0.4
+      },
+      "base": 0.2,
+      "tags": [
+        "range",
+        "weapon"
+      ],
+      "summary": "Дальний бой."
+    },
+    {
+      "id": "crushing_fists",
+      "name": "Crushing Fists",
+      "category": "weapon",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "damage"
+      ],
+      "counters": {
+        "tank": 0.25
+      },
+      "base": 0.24,
+      "tags": [
+        "damage",
+        "weapon"
+      ],
+      "summary": "Мощный урон."
+    },
+    {
+      "id": "glass_cannon",
+      "name": "Glass Cannon",
+      "category": "weapon",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "damage"
+      ],
+      "counters": {
+        "tank": 0.3
+      },
+      "base": 0.26,
+      "tags": [
+        "damage",
+        "weapon",
+        "glass"
+      ],
+      "summary": "Максимальный урон ценой здоровья."
+    },
+    {
+      "id": "silencer",
+      "name": "Silencer",
+      "category": "weapon",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "silence"
+      ],
+      "counters": {
+        "spirit": 0.5,
+        "control": 0.2
+      },
+      "base": 0.1,
+      "tags": [
+        "silence",
+        "weapon"
+      ],
+      "summary": "Сайленс при попадании — против кастеров."
+    },
+    {
+      "id": "spiritual_overflow",
+      "name": "Spiritual Overflow",
+      "category": "weapon",
+      "tier": 4,
+      "cost": 6400,
+      "active": false,
+      "families": [
+        "spirit",
+        "weapon"
+      ],
+      "counters": {},
+      "base": 0.26,
+      "tags": [
+        "spirit",
+        "weapon"
+      ],
+      "summary": "Дух и урон оружия."
+    }
+  ]
+}

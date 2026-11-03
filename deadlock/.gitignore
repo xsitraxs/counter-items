@@ -1,0 +1,7 @@
+agent/state.json
+agent/roi.json
+agent/templates/*.png
+agent/templates/manifest.json
+__pycache__/
+*.pyc
+.DS_Store

@@ -61,3 +61,18 @@ lua tests/run.lua
 ## Лицензия
 
 MIT. См. [`LICENSE`](LICENSE).
+
+## Deadlock-прототип
+
+В каталоге [`deadlock/`](deadlock/README.md) — отдельный эксперимент: ситуационная
+сборка для **Deadlock** с чтением HUD/скорборда. Это не часть Dota-скрипта и не
+требует Umbrella: веб-движок на JS, база героев/предметов в JSON, агент чтения
+экрана на Python.
+
+```sh
+cd deadlock
+python3 agent/serve.py
+# http://localhost:8765/
+```
+
+Подробности, ограничения и запуск агента — в [`deadlock/README.md`](deadlock/README.md).

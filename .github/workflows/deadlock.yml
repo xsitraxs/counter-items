@@ -1,0 +1,36 @@
+name: Deadlock prototype
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Engine + agent tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run JS and Python tests
+        working-directory: deadlock
+        run: npm run test:all
+
+      - name: Check JS syntax
+        working-directory: deadlock
+        run: node --check web/app.js && node --check web/engine.js
+
+      - name: Check Python syntax
+        working-directory: deadlock
+        run: python3 -m py_compile agent/serve.py agent/capture.py agent/capture_templates.py agent/overlay.py data/build_data.py
