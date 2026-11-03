@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deadlock — Situational Build</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">DL</span>
+      <div>
+        <h1>Situational Build</h1>
+        <p>Deadlock · прототип чтения угроз и контр-сборки</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span class="badge" id="data-status">загрузка данных…</span>
+      <button class="btn ghost" id="demo-btn">Демо</button>
+      <button class="btn ghost" id="reset-btn">Сбросить</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>Мой герой</h2>
+        <label class="field">
+          <span>Герой</span>
+          <select id="my-hero"></select>
+        </label>
+        <div class="field">
+          <span>Роль</span>
+          <div class="segmented" id="role-control">
+            <button data-role="auto" class="active">Авто</button>
+            <button data-role="core">Кор</button>
+            <button data-role="support">Поддержка</button>
+          </div>
+        </div>
+        <label class="field">
+          <span>Время матча: <b id="minutes-value">18</b> мин</span>
+          <input type="range" id="minutes" min="0" max="40" value="18" step="1">
+        </label>
+      </section>
+
+      <section class="panel">
+        <h2>Противники <span class="hint">до 6</span></h2>
+        <div id="enemy-selects" class="enemy-grid"></div>
+        <div class="row-actions">
+          <button class="btn small" id="random-enemies">Случайная команда</button>
+          <button class="btn small ghost" id="clear-enemies">Очистить</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Мои предметы <span class="hint">необязательно</span></h2>
+        <input type="search" id="item-search" placeholder="Поиск предмета…">
+        <div id="item-picker" class="item-picker"></div>
+        <div id="my-items-chips" class="chips"></div>
+      </section>
+
+      <button class="btn primary big" id="analyze-btn">Собрать билд</button>
+      <p class="disclaimer">Прототип. База героев и предметов — стартовая, не официальные данные Valve. Проверяйте актуальность патча.</p>
+    </aside>
+
+    <section class="content">
+      <div class="tabs">
+        <button class="tab active" data-tab="build">Сборка</button>
+        <button class="tab" data-tab="scoreboard">Скорборд</button>
+        <button class="tab" data-tab="capture">Захват экрана</button>
+      </div>
+
+      <div id="tab-build" class="tab-panel">
+        <div id="match-summary" class="match-summary"></div>
+
+        <div class="section-head">
+          <h2>Угрозы</h2>
+          <span class="hint" id="threat-hint"></span>
+        </div>
+        <div id="threat-list" class="threat-list"></div>
+
+        <div class="section-head">
+          <h2>Рекомендации</h2>
+          <span class="hint" id="rec-hint"></span>
+        </div>
+        <div id="recommendations" class="rec-grid"></div>
+
+        <div id="alternatives-wrap" class="alternatives hidden">
+          <h3>Альтернативы</h3>
+          <div id="alternatives" class="alt-list"></div>
+        </div>
+      </div>
+
+      <div id="tab-scoreboard" class="tab-panel hidden">
+        <div class="panel">
+          <h2>Импорт скорборда</h2>
+          <p class="muted">Вставьте текст из Tab-скорборда Deadlock (или вывод OCR). Парсер найдёт известных героев по именам.</p>
+          <textarea id="scoreboard-input" rows="10" placeholder="Haze  5  12,345  3/2/1&#10;Kelvin  4  9,100  1/4/8&#10;..."></textarea>
+          <div class="row-actions">
+            <button class="btn primary" id="parse-btn">Найти героев</button>
+            <button class="btn ghost" id="scoreboard-demo">Пример</button>
+          </div>
+          <div id="scoreboard-found" class="chips"></div>
+          <button class="btn" id="apply-scoreboard">Применить первых 6 как противников</button>
+        </div>
+      </div>
+
+      <div id="tab-capture" class="tab-panel hidden">
+        <div class="panel">
+          <h2>Захват экрана</h2>
+          <p class="muted">Агент <code>agent/capture.py</code> читает скриншот, OCR/шаблоны ищет героев, затем публикует состояние. Веб-интерфейс может забрать его через <code>/state.json</code>.</p>
+          <div class="status-row">
+            <span class="status-dot" id="agent-dot"></span>
+            <span id="agent-status">Проверка агента…</span>
+            <button class="btn small" id="agent-refresh">Обновить</button>
+            <button class="btn small primary" id="agent-apply" disabled>Применить состояние агента</button>
+          </div>
+          <pre class="code-block" id="agent-state">—</pre>
+          <h3>Как это работает</h3>
+          <ol>
+            <li><b>Захват:</b> DXGI / Windows.Graphics.Capture / mss, borderless, кроп HUD.</li>
+            <li><b>Детекция:</b> OCR имён + template matching портретов; confidence threshold.</li>
+            <li><b>Состояние:</b> мой герой, 6 противников, время, предметы; JSON в <code>state.json</code>.</li>
+            <li><b>Рекомендации:</b> этот же движок в браузере; агент не читает память игры.</li>
+          </ol>
+          <p class="muted">Запуск: <code>python3 agent/serve.py</code>, затем <code>python3 agent/capture.py --mock</code> во втором терминале. В песочнице агент не запущен — это нормально.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

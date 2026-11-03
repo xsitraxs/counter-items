@@ -1,0 +1,13 @@
+{
+  "name": "deadlock-situational-builder",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Прототип ситуационной сборки Deadlock: база героев/предметов, движок рекомендаций, веб-интерфейс и заготовка агента чтения экрана.",
+  "scripts": {
+    "test": "node --test tests/engine.test.js",
+    "serve": "python3 agent/serve.py",
+    "test:agent": "python3 -m unittest discover -s tests -p \"test_agent.py\"",
+    "test:all": "node --test tests/engine.test.js && python3 -m unittest discover -s tests -p \"test_agent.py\""
+  }
+}

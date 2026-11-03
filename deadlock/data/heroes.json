@@ -1,0 +1,767 @@
+{
+  "version": "deadlock-starter-2026.11",
+  "heroes": [
+    {
+      "id": "abrams",
+      "name": "Abrams",
+      "roles": [
+        "tank",
+        "initiator"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.9,
+        "control": 0.7,
+        "tank": 0.9,
+        "sustain": 0.5,
+        "mobility": 0.5
+      },
+      "notes": "Танк-инициатор: много здоровья, таран и контроль в ближнем бою.",
+      "tags": []
+    },
+    {
+      "id": "apollo",
+      "name": "Apollo",
+      "roles": [
+        "assassin"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.9,
+        "mobility": 0.8,
+        "burst": 0.7,
+        "control": 0.3
+      },
+      "notes": "Мобильный убийца: прыжки, внезапные заходы и высокий физический бурст.",
+      "tags": []
+    },
+    {
+      "id": "baba",
+      "name": "Baba",
+      "roles": [
+        "disruptor"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.8,
+        "control": 0.8,
+        "debuff": 0.8,
+        "burst": 0.4
+      },
+      "notes": "Проклятия и хексы: контроль через дебаффы.",
+      "tags": []
+    },
+    {
+      "id": "bebop",
+      "name": "Bebop",
+      "roles": [
+        "initiator",
+        "disruptor"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.8,
+        "control": 0.9,
+        "burst": 0.7,
+        "tank": 0.4
+      },
+      "notes": "Крюк, бомба и контроль; инициирует драки и вытаскивает цели.",
+      "tags": []
+    },
+    {
+      "id": "billy",
+      "name": "Billy",
+      "roles": [
+        "initiator",
+        "tank"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.9,
+        "control": 0.8,
+        "mobility": 0.7,
+        "burst": 0.5
+      },
+      "notes": "Таран и подброс: ближний бой, разрывает строй.",
+      "tags": []
+    },
+    {
+      "id": "calico",
+      "name": "Calico",
+      "roles": [
+        "assassin"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.8,
+        "stealth": 0.9,
+        "burst": 0.8,
+        "mobility": 0.6
+      },
+      "notes": "Невидимый убийца: бьёт из засады и уходит.",
+      "tags": []
+    },
+    {
+      "id": "celeste",
+      "name": "Celeste",
+      "roles": [
+        "carry"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.9,
+        "burst": 0.8,
+        "range": 0.7,
+        "zone": 0.4
+      },
+      "notes": "Дальний бой и бурст способностями; опасна на открытых картах.",
+      "tags": []
+    },
+    {
+      "id": "deadman",
+      "name": "Deadman Danny",
+      "roles": [
+        "carry"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.9,
+        "mobility": 0.7,
+        "burst": 0.7,
+        "range": 0.6
+      },
+      "notes": "Мобильный стрелок с высоким взрывным уроном.",
+      "tags": []
+    },
+    {
+      "id": "drifter",
+      "name": "Drifter",
+      "roles": [
+        "assassin"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.9,
+        "stealth": 0.8,
+        "dot": 0.7,
+        "mobility": 0.6
+      },
+      "notes": "Кровотечение и засады; наказывает за торговлю уроном.",
+      "tags": []
+    },
+    {
+      "id": "dynamo",
+      "name": "Dynamo",
+      "roles": [
+        "support",
+        "tank"
+      ],
+      "damage": "spirit",
+      "attack": "melee",
+      "threats": {
+        "spirit": 0.7,
+        "control": 0.8,
+        "tank": 0.8,
+        "sustain": 0.6
+      },
+      "notes": "Инициатор-танк: контроль, лечение и живучесть.",
+      "tags": []
+    },
+    {
+      "id": "graves",
+      "name": "Graves",
+      "roles": [
+        "carry"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.9,
+        "zone": 0.8,
+        "control": 0.5,
+        "burst": 0.6
+      },
+      "notes": "Зоны и урон по площади; запирает проходы.",
+      "tags": []
+    },
+    {
+      "id": "grey_talon",
+      "name": "Grey Talon",
+      "roles": [
+        "carry"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.9,
+        "burst": 0.8,
+        "silence": 0.6,
+        "range": 0.7
+      },
+      "notes": "Снайпер-маг: бурст, сайленс и дальний бой.",
+      "tags": []
+    },
+    {
+      "id": "haze",
+      "name": "Haze",
+      "roles": [
+        "assassin"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.9,
+        "stealth": 0.9,
+        "burst": 0.8,
+        "mobility": 0.6
+      },
+      "notes": "Невидимость и смертельный бурст; ищет одиночные цели.",
+      "tags": []
+    },
+    {
+      "id": "holliday",
+      "name": "Holliday",
+      "roles": [
+        "carry"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.9,
+        "burst": 0.7,
+        "mobility": 0.6,
+        "range": 0.5
+      },
+      "notes": "Взрывной урон и мобильность; опасна в драках.",
+      "tags": []
+    },
+    {
+      "id": "infernus",
+      "name": "Infernus",
+      "roles": [
+        "initiator",
+        "disruptor"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.8,
+        "dot": 0.8,
+        "control": 0.6,
+        "zone": 0.6
+      },
+      "notes": "Поджог и зоны: ДоТ, контроль территории.",
+      "tags": []
+    },
+    {
+      "id": "ivy",
+      "name": "Ivy",
+      "roles": [
+        "support"
+      ],
+      "damage": "spirit",
+      "attack": "melee",
+      "threats": {
+        "spirit": 0.7,
+        "control": 0.7,
+        "sustain": 0.7,
+        "mobility": 0.5
+      },
+      "notes": "Поддержка: контроль, лечение и мобильность союзников.",
+      "tags": []
+    },
+    {
+      "id": "kelvin",
+      "name": "Kelvin",
+      "roles": [
+        "support",
+        "tank"
+      ],
+      "damage": "spirit",
+      "attack": "melee",
+      "threats": {
+        "spirit": 0.7,
+        "control": 0.8,
+        "tank": 0.8,
+        "sustain": 0.6
+      },
+      "notes": "Ледяной контроль и танкование; часто инициатор.",
+      "tags": []
+    },
+    {
+      "id": "lady_geist",
+      "name": "Lady Geist",
+      "roles": [
+        "carry"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.9,
+        "sustain": 0.8,
+        "burst": 0.7,
+        "range": 0.5
+      },
+      "notes": "Вампиризм и самоурон: лечится в драке и наносит бурст.",
+      "tags": []
+    },
+    {
+      "id": "lash",
+      "name": "Lash",
+      "roles": [
+        "initiator",
+        "disruptor"
+      ],
+      "damage": "spirit",
+      "attack": "melee",
+      "threats": {
+        "spirit": 0.8,
+        "control": 0.9,
+        "burst": 0.7,
+        "mobility": 0.6
+      },
+      "notes": "Притягивание и контроль; вытаскивает цели из строя.",
+      "tags": []
+    },
+    {
+      "id": "mcginnis",
+      "name": "McGinnis",
+      "roles": [
+        "support"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.8,
+        "control": 0.7,
+        "zone": 0.7,
+        "sustain": 0.5
+      },
+      "notes": "Призывы и зоны; поддержка через контроль территории.",
+      "tags": []
+    },
+    {
+      "id": "mina",
+      "name": "Mina",
+      "roles": [
+        "carry"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.8,
+        "mobility": 0.7,
+        "burst": 0.6,
+        "range": 0.5
+      },
+      "notes": "Мобильный маг: harassment и внезапные заходы.",
+      "tags": []
+    },
+    {
+      "id": "mirage",
+      "name": "Mirage",
+      "roles": [
+        "assassin"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.8,
+        "stealth": 0.9,
+        "burst": 0.8,
+        "mobility": 0.6
+      },
+      "notes": "Невидимый убийца; опасен для одиночных керри.",
+      "tags": []
+    },
+    {
+      "id": "mo_krill",
+      "name": "Mo & Krill",
+      "roles": [
+        "tank",
+        "initiator"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.8,
+        "control": 0.7,
+        "tank": 0.9,
+        "sustain": 0.6,
+        "mobility": 0.5
+      },
+      "notes": "Танк-инициатор: двое в одном, много контроля и здоровья.",
+      "tags": []
+    },
+    {
+      "id": "nurse_harrow",
+      "name": "Nurse Harrow",
+      "roles": [
+        "support"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.7,
+        "sustain": 0.8,
+        "control": 0.6,
+        "debuff": 0.5
+      },
+      "notes": "Лечение и контроль; может перевернуть затяжную драку.",
+      "tags": []
+    },
+    {
+      "id": "paige",
+      "name": "Paige",
+      "roles": [
+        "support"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.8,
+        "control": 0.7,
+        "sustain": 0.7,
+        "zone": 0.5
+      },
+      "notes": "Книги, контроль и поддержка; сильна в командных драках.",
+      "tags": []
+    },
+    {
+      "id": "paradox",
+      "name": "Paradox",
+      "roles": [
+        "disruptor"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.7,
+        "control": 0.8,
+        "mobility": 0.7,
+        "burst": 0.5
+      },
+      "notes": "Временные манипуляции: контроль и мобильность.",
+      "tags": []
+    },
+    {
+      "id": "pocket",
+      "name": "Pocket",
+      "roles": [
+        "assassin"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.8,
+        "mobility": 0.9,
+        "burst": 0.7,
+        "stealth": 0.4
+      },
+      "notes": "Мобильный убийца с трюками; быстро входит и выходит.",
+      "tags": []
+    },
+    {
+      "id": "rat_king",
+      "name": "Rat King",
+      "roles": [
+        "tank",
+        "initiator"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.8,
+        "control": 0.6,
+        "tank": 0.9,
+        "sustain": 0.6,
+        "zone": 0.5
+      },
+      "notes": "Танк с призывами; контролирует территорию.",
+      "tags": []
+    },
+    {
+      "id": "rem",
+      "name": "Rem",
+      "roles": [
+        "support"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.7,
+        "sustain": 0.8,
+        "control": 0.6,
+        "debuff": 0.5
+      },
+      "notes": "Маленький лекарь: лечение, контроль и дебаффы.",
+      "tags": []
+    },
+    {
+      "id": "seven",
+      "name": "Seven",
+      "roles": [
+        "carry"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.9,
+        "burst": 0.8,
+        "control": 0.5,
+        "range": 0.6
+      },
+      "notes": "Электрический маг: бурст и контроль.",
+      "tags": []
+    },
+    {
+      "id": "shiv",
+      "name": "Shiv",
+      "roles": [
+        "assassin"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.9,
+        "dot": 0.8,
+        "mobility": 0.7,
+        "burst": 0.6
+      },
+      "notes": "Кровотечение и мобильность; наказывает за близкий бой.",
+      "tags": []
+    },
+    {
+      "id": "silver",
+      "name": "Silver",
+      "roles": [
+        "assassin"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.8,
+        "stealth": 0.9,
+        "burst": 0.8,
+        "mobility": 0.6
+      },
+      "notes": "Невидимый стрелок; ищет уязвимые цели.",
+      "tags": []
+    },
+    {
+      "id": "sinclair",
+      "name": "Sinclair",
+      "roles": [
+        "disruptor"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.8,
+        "control": 0.7,
+        "debuff": 0.7,
+        "burst": 0.5
+      },
+      "notes": "Копирование способностей и контроль; непредсказуем.",
+      "tags": []
+    },
+    {
+      "id": "solomon",
+      "name": "Solomon",
+      "roles": [
+        "disruptor"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.8,
+        "control": 0.8,
+        "zone": 0.7,
+        "burst": 0.5
+      },
+      "notes": "Зоны и контроль; запирает карту.",
+      "tags": []
+    },
+    {
+      "id": "doorman",
+      "name": "The Doorman",
+      "roles": [
+        "disruptor"
+      ],
+      "damage": "spirit",
+      "attack": "melee",
+      "threats": {
+        "spirit": 0.7,
+        "control": 0.8,
+        "mobility": 0.6,
+        "debuff": 0.6
+      },
+      "notes": "Дезориентация и контроль; ломает позиционирование.",
+      "tags": []
+    },
+    {
+      "id": "venator",
+      "name": "Venator",
+      "roles": [
+        "carry"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.9,
+        "burst": 0.7,
+        "range": 0.8
+      },
+      "notes": "Дальний бой и смертельный выстрел; опасен на дистанции.",
+      "tags": []
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "roles": [
+        "tank"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.8,
+        "tank": 0.9,
+        "sustain": 0.7,
+        "control": 0.5
+      },
+      "notes": "Танк с высокой живучестью; держит линию.",
+      "tags": []
+    },
+    {
+      "id": "vindicta",
+      "name": "Vindicta",
+      "roles": [
+        "carry"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.9,
+        "mobility": 0.8,
+        "burst": 0.7,
+        "range": 0.6
+      },
+      "notes": "Мобильный стрелок: быстрые заходы и высокий урон.",
+      "tags": []
+    },
+    {
+      "id": "violet",
+      "name": "Violet",
+      "roles": [
+        "carry"
+      ],
+      "damage": "spirit",
+      "attack": "ranged",
+      "threats": {
+        "spirit": 0.8,
+        "burst": 0.7,
+        "mobility": 0.7,
+        "range": 0.5
+      },
+      "notes": "Мобильный маг: бурст и смена позиции.",
+      "tags": []
+    },
+    {
+      "id": "viscous",
+      "name": "Viscous",
+      "roles": [
+        "support",
+        "disruptor"
+      ],
+      "damage": "spirit",
+      "attack": "melee",
+      "threats": {
+        "spirit": 0.7,
+        "control": 0.8,
+        "debuff": 0.7,
+        "sustain": 0.5
+      },
+      "notes": "Контроль и замедление; часто мешает инициации врага.",
+      "tags": []
+    },
+    {
+      "id": "vyper",
+      "name": "Vyper",
+      "roles": [
+        "carry"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.8,
+        "dot": 0.9,
+        "range": 0.8,
+        "control": 0.4
+      },
+      "notes": "Яд и дальний бой; ДоТ наказывает за отсутствие лечения.",
+      "tags": []
+    },
+    {
+      "id": "warden",
+      "name": "Warden",
+      "roles": [
+        "tank",
+        "initiator"
+      ],
+      "damage": "weapon",
+      "attack": "melee",
+      "threats": {
+        "physical": 0.8,
+        "control": 0.7,
+        "tank": 0.9,
+        "sustain": 0.6,
+        "mobility": 0.5
+      },
+      "notes": "Танк-инициатор: начинает драки и держит урон.",
+      "tags": []
+    },
+    {
+      "id": "wraith",
+      "name": "Wraith",
+      "roles": [
+        "carry"
+      ],
+      "damage": "weapon",
+      "attack": "ranged",
+      "threats": {
+        "physical": 0.8,
+        "mobility": 0.7,
+        "burst": 0.7,
+        "range": 0.6
+      },
+      "notes": "Мобильный стрелок; опасен в драках и на карте.",
+      "tags": []
+    },
+    {
+      "id": "yamato",
+      "name": "Yamato",
+      "roles": [
+        "assassin"
+      ],
+      "damage": "spirit",
+      "attack": "melee",
+      "threats": {
+        "spirit": 0.8,
+        "mobility": 0.8,
+        "burst": 0.7,
+        "control": 0.4
+      },
+      "notes": "Мобильный убийца; способности и быстрые заходы.",
+      "tags": []
+    }
+  ]
+}
